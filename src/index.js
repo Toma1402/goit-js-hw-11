@@ -16,8 +16,12 @@ function onSubmit(evt) {
       .then(data => {
         console.log(data);
         return createMarkup(data);
+        if (data.length === 0) {
+          console.log(1);
+        }
       });
   }
+  console.log(data);
 }
 
 async function fetchImages() {
