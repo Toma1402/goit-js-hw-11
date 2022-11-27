@@ -31,6 +31,7 @@ function onSubmit(evt) {
       Notify.success(`Hooray! We found ${resp.totalHits} images.`);
       return createMarkup(resp.hits);
     }
+    gallerySimpleLigthbox.refresh();
   });
 }
 
