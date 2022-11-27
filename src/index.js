@@ -18,8 +18,8 @@ function onSubmit(evt) {
 
   clearHTML();
 
-  let searchedImage = formRef.firstElementChild.value.trim();
-  fetchImages((inputText = searchedImage)).then(resp => {
+  let inputText = formRef.firstElementChild.value.trim();
+  fetchImages(inputText).then(resp => {
     console.log(resp.hits);
     if (resp.hits.length === 0) {
       Notify.failure(
@@ -78,7 +78,7 @@ function clearHTML() {
   galleryRef.innerHTML = '';
   groupNumber = 1;
 }
-async function fetchImages() {
+async function fetchImages(inputText) {
   try {
     const response = await axios.get(
       `https://pixabay.com/api?key=${API_KEY}&q=${inputText}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${itemQuantity}&page=${groupNumber}`
