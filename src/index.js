@@ -11,16 +11,13 @@ const API_KEY = '31598186-1712abd3d6ab8b33b97a57686';
 const itemQuantity = 40;
 let groupNumber = 1;
 
-const gallerySimpleLigthbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
+const gallerySimpleLigthbox = new SimpleLightbox('.gallery a');
 formRef.addEventListener('submit', onSubmit);
 function onSubmit(evt) {
   evt.preventDefault();
   let searchedImage = formRef.firstElementChild.value.trim();
   clearHTML();
-
+  console.log(searchedImage);
   fetchImages((inputText = searchedImage)).then(resp => {
     console.log(resp.hits);
     if (resp.hits.length === 0) {
