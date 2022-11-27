@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Notify } from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const formRef = document.querySelector('.search-form');
 const galleryRef = document.querySelector('.gallery');
@@ -20,7 +21,10 @@ async function fetchImages() {
     console.log(error);
   }
 }
-
+const gallerySimpleLigthbox = new SimpleLightbox('.image-link', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 formRef.addEventListener('submit', onSubmit);
 function onSubmit(evt) {
   evt.preventDefault();
@@ -37,6 +41,7 @@ function onSubmit(evt) {
     }
     Notify.success(`Hooray! We found ${resp.totalHits} images.`);
     loadRef.classList.add('is-visible');
+
     return createMarkup(resp.hits);
   });
 }
@@ -51,15 +56,18 @@ function createMarkup(arr) {
         views,
         comments,
         downloads,
+        largeImageURL,
       }) => `<div class="photo-card">
-      <img src="${webformatURL}" alt="${tags}" loading="lazy" width="300" />
-      <div class="info">
-        <p class="info-item"><b>Likes</b> ${likes}</p>
-        <p class="info-item"><b>Views</b> ${views}</p>
-        <p class="info-item"><b>Comments</b> ${comments}</p>
-        <p class="info-item"><b>Downloads</b> ${downloads}</p>
-      </div>
-    </div>`
+        <a href="${largeImageURL} class="image-link"
+          ><img src="${webformatURL}" alt="${tags}" loading="lazy" width="300"
+        /></a>
+        <div class="info">
+          <p class="info-item"><b>Likes</b> ${likes}</p>
+          <p class="info-item"><b>Views</b> ${views}</p>
+          <p class="info-item"><b>Comments</b> ${comments}</p>
+          <p class="info-item"><b>Downloads</b> ${downloads}</p>
+        </div>
+      </div>`
     )
     .join('');
   galleryRef.insertAdjacentHTML('beforeend', markup);
