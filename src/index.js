@@ -28,11 +28,11 @@ function onSubmit(evt) {
         'Sorry, there are no images matching your search query. Please try again.'
       );
       loadRef.classList.remove('is-visible');
+    } else {
+      loadRef.classList.add('is-visible');
+      Notify.success(`Hooray! We found ${resp.totalHits} images.`);
+      return createMarkup(resp.hits);
     }
-    Notify.success(`Hooray! We found ${resp.totalHits} images.`);
-    loadRef.classList.add('is-visible');
-
-    return createMarkup(resp.hits);
   });
 }
 
