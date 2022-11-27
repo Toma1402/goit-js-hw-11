@@ -15,9 +15,10 @@ const gallerySimpleLigthbox = new SimpleLightbox('.gallery a');
 formRef.addEventListener('submit', onSubmit);
 function onSubmit(evt) {
   evt.preventDefault();
-  let searchedImage = formRef.firstElementChild.value.trim();
+
   clearHTML();
-  console.log(searchedImage);
+
+  let searchedImage = formRef.firstElementChild.value.trim();
   fetchImages((inputText = searchedImage)).then(resp => {
     console.log(resp.hits);
     if (resp.hits.length === 0) {
