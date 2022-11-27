@@ -11,16 +11,6 @@ const API_KEY = '31598186-1712abd3d6ab8b33b97a57686';
 const itemQuantity = 40;
 let groupNumber = 1;
 
-async function fetchImages() {
-  try {
-    const response = await axios.get(
-      `https://pixabay.com/api?key=${API_KEY}&q=${inputText}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${itemQuantity}&page=${groupNumber}`
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
 const gallerySimpleLigthbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
@@ -88,4 +78,14 @@ loadRef.addEventListener('click', () => {
 function clearHTML() {
   galleryRef.innerHTML = '';
   groupNumber = 1;
+}
+async function fetchImages() {
+  try {
+    const response = await axios.get(
+      `https://pixabay.com/api?key=${API_KEY}&q=${inputText}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${itemQuantity}&page=${groupNumber}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 }
