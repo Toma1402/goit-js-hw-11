@@ -21,7 +21,7 @@ async function fetchImages() {
     console.log(error);
   }
 }
-const gallerySimpleLigthbox = new SimpleLightbox('.image-link', {
+const gallerySimpleLigthbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
