@@ -1,3 +1,6 @@
+body {
+  margin: 0;
+}
 .gallery {
   display: flex;
   flex-wrap: wrap;
@@ -10,16 +13,37 @@
     0px 2px 1px rgb(0 0 0 / 20%);
 }
 .form-container {
-  background-color: bisque;
+  background-color: rgb(39, 96, 169);
 }
 .search-form {
   padding-top: 30px;
   padding-bottom: 30px;
-  text-align: center;
+
+  display: flex;
+  justify-content: center;
 }
 .load-more {
   display: none;
+  margin: 30px auto;
+  background-color: rgb(39, 96, 169);
+  color: azure;
+  border: 0;
+  padding: 10px 15px;
+  cursor: pointer;
 }
 .is-visible {
   display: block;
+}
+.input-field,
+.search-btn {
+  padding: 10px 15px;
+  border: 0;
+}
+.input-field {
+  outline: 0;
+}
+.search-btn {
+  background-color: rgb(196, 195, 195);
+  color: rgb(41, 50, 60);
+  cursor: pointer;
 }
