@@ -82,9 +82,17 @@ function clearHTML() {
 }
 async function fetchImages(inputText) {
   try {
-    const response = await axios.get(
-      `https://pixabay.com/api/?key=${API_KEY}&q=${inputText}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${itemQuantity}&page=${groupNumber}`
-    );
+    const response = await axios.get('https://pixabay.com/api/', {
+      params: {
+        key: `${API_KEY}`,
+        q: `${inputText}`,
+        image_type: 'photo',
+        orientation: 'horizontal',
+        safesearch: 'true',
+        page: `${groupNumber}`,
+        per_page: `${itemQuantity}`, //40
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
