@@ -50,6 +50,7 @@ body {
 }
 .image-link {
   height: 100%;
+  width: 100%;
 }
 .thumb-image {
   height: 200px;
