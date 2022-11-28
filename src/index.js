@@ -11,15 +11,15 @@ const API_KEY = '31598186-1712abd3d6ab8b33b97a57686';
 const itemQuantity = 40;
 let groupNumber = 1;
 
-const gallerySimpleLigthbox = new SimpleLightbox('.gallery a');
+/* const gallerySimpleLigthbox = new SimpleLightbox('.gallery a'); */
 formRef.addEventListener('submit', onSubmit);
 function onSubmit(evt) {
   evt.preventDefault();
 
   clearHTML();
 
-  let inputText = formRef.firstElementChild.value.trim();
-  fetchImages(inputText).then(resp => {
+  let searchedImage = formRef.firstElementChild.value.trim();
+  fetchImages((inputText = searchedImage)).then(resp => {
     console.log(resp.hits);
     if (resp.hits.length === 0) {
       Notify.failure(
@@ -65,6 +65,7 @@ function createMarkup(arr) {
 loadRef.addEventListener('click', () => {
   groupNumber += 1;
   fetchImages().then(resp => {
+    console.log(resp);
     const totalImages = Math.ceil(resp.totalHits / itemQuantity);
     if (groupNumber > totalImages) {
       Notify.info("We're sorry, but you've reached the end of search results.");
@@ -78,7 +79,7 @@ function clearHTML() {
   galleryRef.innerHTML = '';
   groupNumber = 1;
 }
-async function fetchImages(inputText) {
+async function fetchImages() {
   try {
     const response = await axios.get(
       `https://pixabay.com/api?key=${API_KEY}&q=${inputText}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${itemQuantity}&page=${groupNumber}`
