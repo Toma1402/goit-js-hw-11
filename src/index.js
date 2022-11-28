@@ -11,7 +11,7 @@ const API_KEY = '31598186-1712abd3d6ab8b33b97a57686';
 const itemQuantity = 40;
 let groupNumber = 1;
 
-/* const gallerySimpleLigthbox = new SimpleLightbox('.gallery a'); */
+const gallerySimpleLigthbox = new SimpleLightbox('.gallery a');
 formRef.addEventListener('submit', onSubmit);
 function onSubmit(evt) {
   evt.preventDefault();
