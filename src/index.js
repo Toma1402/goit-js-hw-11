@@ -21,7 +21,6 @@ function onSubmit(evt) {
 
   searchedImage = formRef.firstElementChild.value.trim();
   fetchImages(searchedImage).then(resp => {
-    console.log(resp.hits);
     if (resp.hits.length === 0) {
       Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
@@ -68,7 +67,6 @@ function createMarkup(arr) {
 loadRef.addEventListener('click', () => {
   groupNumber += 1;
   fetchImages(searchedImage).then(resp => {
-    console.log(resp);
     const totalImages = Math.ceil(resp.totalHits / itemQuantity);
     if (groupNumber > totalImages) {
       Notify.info("We're sorry, but you've reached the end of search results.");
