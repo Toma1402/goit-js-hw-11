@@ -16,23 +16,25 @@ const gallerySimpleLigthbox = new SimpleLightbox('.gallery a');
 formRef.addEventListener('submit', onSubmit);
 function onSubmit(evt) {
   evt.preventDefault();
-
+  loadRef.classList.remove('is-visible');
   clearHTML();
 
   searchedImage = formRef.firstElementChild.value.trim();
-  fetchImages(searchedImage).then(resp => {
-    if (resp.hits.length === 0) {
-      Notify.failure(
-        'Sorry, there are no images matching your search query. Please try again.'
-      );
-      loadRef.classList.remove('is-visible');
-    } else {
-      loadRef.classList.add('is-visible');
-      Notify.success(`Hooray! We found ${resp.totalHits} images.`);
-      return createMarkup(resp.hits);
-    }
-    gallerySimpleLigthbox.refresh();
-  });
+  if (searchedImage) {
+    fetchImages(searchedImage).then(resp => {
+      if (resp.hits.length === 0) {
+        Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+        loadRef.classList.remove('is-visible');
+      } else {
+        loadRef.classList.add('is-visible');
+        Notify.success(`Hooray! We found ${resp.totalHits} images.`);
+        return createMarkup(resp.hits);
+      }
+      gallerySimpleLigthbox.refresh();
+    });
+  }
 }
 
 function createMarkup(arr) {
