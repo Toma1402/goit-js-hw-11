@@ -68,8 +68,11 @@ loadRef.addEventListener('click', () => {
   groupNumber += 1;
   fetchImages(searchedImage).then(resp => {
     const totalImages = Math.ceil(resp.totalHits / itemQuantity);
-    if (groupNumber > totalImages) {
+    console.log(totalImages);
+    console.log(resp.totalHits);
+    if (groupNumber >= totalImages) {
       Notify.info("We're sorry, but you've reached the end of search results.");
+      loadRef.classList.remove('is-visible');
     } else {
       createMarkup(resp.hits);
     }
