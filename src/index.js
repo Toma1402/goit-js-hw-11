@@ -14,29 +14,31 @@ let searchedImage = '';
 
 const gallerySimpleLigthbox = new SimpleLightbox('.gallery a');
 formRef.addEventListener('submit', onSubmit);
-function onSubmit(evt) {
+async function onSubmit(evt) {
   evt.preventDefault();
   loadRef.classList.remove('is-visible');
   clearHTML();
 
   searchedImage = formRef.firstElementChild.value.trim();
   if (searchedImage) {
-    fetchImages(searchedImage).then(resp => {
-      if (resp.hits.length === 0) {
-        Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.'
-        );
-        loadRef.classList.remove('is-visible');
-      } else {
-        loadRef.classList.add('is-visible');
-        Notify.success(`Hooray! We found ${resp.totalHits} images.`);
-        return createMarkup(resp.hits);
-      }
-      gallerySimpleLigthbox.refresh();
-    });
+    const resp = await fetchImages(searchedImage);
+    if (resp.hits.length === 0) {
+      invalidQuery();
+    } else {
+      loadRef.classList.add('is-visible');
+      Notify.success(`Hooray! We found ${resp.totalHits} images.`);
+      return createMarkup(resp.hits);
+    }
+    gallerySimpleLigthbox.refresh();
   }
 }
 
+function invalidQuery() {
+  Notify.failure(
+    'Sorry, there are no images matching your search query. Please try again.'
+  );
+  loadRef.classList.remove('is-visible');
+}
 function createMarkup(arr) {
   const markup = arr
     .map(
@@ -66,20 +68,19 @@ function createMarkup(arr) {
   galleryRef.insertAdjacentHTML('beforeend', markup);
 }
 
-loadRef.addEventListener('click', () => {
+loadRef.addEventListener('click', async () => {
   groupNumber += 1;
-  fetchImages(searchedImage)
-    .then(resp => {
-      const totalImages = Math.ceil(resp.totalHits / itemQuantity);
-      console.log(totalImages);
-      console.log(groupNumber);
+  const resp = await fetchImages(searchedImage);
+  try {
+    const totalImages = Math.ceil(resp.totalHits / itemQuantity);
+    console.log(totalImages);
+    console.log(groupNumber);
 
-      createMarkup(resp.hits);
-    })
-    .catch(err => {
-      Notify.info("We're sorry, but you've reached the end of search results.");
-      loadRef.classList.remove('is-visible');
-    });
+    createMarkup(resp.hits);
+  } catch (err) {
+    Notify.info("We're sorry, but you've reached the end of search results.");
+    loadRef.classList.remove('is-visible');
+  }
 });
 
 function clearHTML() {
@@ -99,7 +100,7 @@ async function fetchImages(inputText) {
         per_page: `${itemQuantity}`, //40
       },
     });
-    console.log(response.data);
+
     return response.data;
   } catch (error) {
     console.log(error);
