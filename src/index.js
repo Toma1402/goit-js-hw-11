@@ -12,7 +12,6 @@ const itemQuantity = 40;
 let groupNumber = 1;
 let searchedImage = '';
 
-const gallerySimpleLigthbox = new SimpleLightbox('.gallery a');
 formRef.addEventListener('submit', onSubmit);
 async function onSubmit(evt) {
   evt.preventDefault();
@@ -106,3 +105,7 @@ async function fetchImages(inputText) {
     console.log(error);
   }
 }
+let gallerySimpleLigthbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
