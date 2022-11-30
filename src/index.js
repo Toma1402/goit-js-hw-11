@@ -68,16 +68,18 @@ function createMarkup(arr) {
 
 loadRef.addEventListener('click', () => {
   groupNumber += 1;
-  fetchImages(searchedImage).then(resp => {
-    const totalImages = Math.ceil(resp.totalHits / itemQuantity);
+  fetchImages(searchedImage)
+    .then(resp => {
+      const totalImages = Math.ceil(resp.totalHits / itemQuantity);
+      console.log(totalImages);
+      console.log(groupNumber);
 
-    if (groupNumber >= totalImages) {
+      createMarkup(resp.hits);
+    })
+    .catch(err => {
       Notify.info("We're sorry, but you've reached the end of search results.");
       loadRef.classList.remove('is-visible');
-    } else {
-      createMarkup(resp.hits);
-    }
-  });
+    });
 });
 
 function clearHTML() {
@@ -97,6 +99,7 @@ async function fetchImages(inputText) {
         per_page: `${itemQuantity}`, //40
       },
     });
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
