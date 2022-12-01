@@ -71,10 +71,6 @@ loadRef.addEventListener('click', async () => {
   groupNumber += 1;
   const resp = await fetchImages(searchedImage);
   try {
-    const totalImages = Math.ceil(resp.totalHits / itemQuantity);
-    console.log(totalImages);
-    console.log(groupNumber);
-
     createMarkup(resp.hits);
   } catch (err) {
     Notify.info("We're sorry, but you've reached the end of search results.");
